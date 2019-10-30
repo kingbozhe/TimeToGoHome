@@ -3,48 +3,48 @@ var map=document.querySelector(".map");
 //由于要在外部调用函数，所以使用自调用使局部变为全局
 //自调用函数——食物的构造函数
 (function (){
-   var elements=[];//用于存储小方块
-   //自定义构造函数，创建food这个对象——
-   function Food(width,height,color){
+    var elements=[];//用于存储小方块
+    //自定义构造函数，创建food这个对象——
+    function Food(width,height,color){
        this.width=width||20;
        this.height=height||20;
        this.color=color;
        this.x=0;
        this.y=0;
-   }
+    }
     window.Food=Food;
-   //为原型对象添加方法——初始化食物的位置及显示效果
-   Food.prototype.init=function (map){
-       //先清除小方块
-       remove();
+    //为原型对象添加方法——初始化食物的位置及显示效果
+    Food.prototype.init=function (map){
+    	//先清除小方块
+        remove();
         //创建并添加小方块对象
-       var div=document.createElement("div");
-       div.style.position="absolute";
-       div.style.width=this.width+"px";
-       div.style.height=this.height+"px";
-       div.style.backgroundColor=this.color;
-       //x  y为随机数
-       this.x=parseInt(Math.random()*(map.offsetWidth/this.width))*this.width;
-       this.y=parseInt(Math.random()*(map.offsetHeight/this.height))*this.height;
-       div.style.left=this.x+"px";
-       div.style.top=this.y+"px";
-       //把这个小方块添加到map中
-       map.appendChild(div);
-       elements.push(div);
-   };
-   //私有函数——写一个用于删除小方块的函数——既删除map中的也删除数组中的
-   function remove(){
-       for(var i=0;i<elements.length;i++){
-           //一个小方块对象
-           var ele=elements[i];
-           //根据小方块对象找到map,并删除map中的小方块
-           ele.parentNode.removeChild(ele);
-           //再删除数组中的小方块对象
+        var div=document.createElement("div");
+        div.style.position="absolute";
+        div.style.width=this.width+"px";
+        div.style.height=this.height+"px";
+        div.style.backgroundColor=this.color;
+        //x  y为随机数
+        this.x=parseInt(Math.random()*(map.offsetWidth/this.width))*this.width;
+        this.y=parseInt(Math.random()*(map.offsetHeight/this.height))*this.height;
+        div.style.left=this.x+"px";
+        div.style.top=this.y+"px";
+        //把这个小方块添加到map中
+        map.appendChild(div);
+        elements.push(div);
+    };
+    //私有函数——写一个用于删除小方块的函数——既删除map中的也删除数组中的
+    function remove(){
+        for(var i=0;i<elements.length;i++){
+            //一个小方块对象
+            var ele=elements[i];
+            //根据小方块对象找到map,并删除map中的小方块
+            ele.parentNode.removeChild(ele);
+            //再删除数组中的小方块对象
                elements.splice(i,1);
-           }
-       }
-   })();
-   //自调用函数——蛇的构造函数
+            }
+        }
+    })();
+    //自调用函数——蛇的构造函数
 (function (){
     //数组用于存储蛇的信息
     var elements=[];
@@ -58,6 +58,7 @@ var map=document.querySelector(".map");
         {x:1,y:2,color:"orange"}
         ];
         //蛇的方向
+        this.lastDirection = "right";
         this.direction=direction||"right";
     }
     //设置初始化的位置及状态
@@ -82,45 +83,64 @@ var map=document.querySelector(".map");
     };
     //为原型添加方法——小蛇动起来
     Snake.prototype.move=function (food,map){
-      //倒循环——一次从头开始，把头的坐标给它后面的一个
-        //改变蛇身体的坐标
-      var i=this.body.length-1;
-      for(;i>0;i--){
-          this.body[i].x=this.body[i-1].x;
-          this.body[i].y=this.body[i-1].y;
-      }
-      //判断方向，改变蛇头的位置
-        switch(this.direction){
-            case "right":this.body[0].x+=1;break;
-            case "left":this.body[0].x-=1;break;
-            case "top":this.body[0].y-=1;break;
-            case "bottom":this.body[0].y+=1;break;
-        }
-        //判断小蛇的头部坐标是否与食物一样
-        var headX=this.body[0].x*this.width;
-        var headY=this.body[0].y*this.height;
-        if(headX==food.x&&headY==food.y){
-            //第一步——食物消失，重新出现一个新的食物
-            food.init(map);
-            //第二步——小蛇的尾巴加长——即复制了一份尾巴加到小蛇上
-                var snakeLast=this.body[this.body.length-1];
-                this.body.push({
-                    x:snakeLast.x,
-                    y:snakeLast.y,
-                    color:snakeLast.color,
-                })
-            }
+        //倒循环——一次从头开始，把头的坐标给它后面的一个
+      	//改变蛇身体的坐标
+      	var nextX = this.body[0].x;
+      	var nextY = this.body[0].y;
+      	switch(this.direction){
+            case "right":nextX = this.body[0].x+1;break;
+            case "left":nextX = this.body[0].x-1;break;
+            case "top":nextY = this.body[0].y-1;break;
+            case "bottom":nextY = this.body[0].y+1;break;
+       }
+      	if(this.body[1].x==nextX&&this.body[1].y==nextY){//不允许蛇反方向掉头
+      		this.direction = this.lastDirection;//按照原来路线移动
+      	}else{
+      		for(var j=0;j<this.body.length-1;j++){
+      			if(this.body[j].x==nextX&&this.body[j].y==nextY){//蛇吃到了自己
+      				return false;
+      			}
+      		}
+      		var i=this.body.length-1;
+	      	for(;i>0;i--){
+	          	this.body[i].x=this.body[i-1].x;
+	          	this.body[i].y=this.body[i-1].y;
+	      	}
+	      	//判断方向，改变蛇头的位置
+	        switch(this.direction){
+	            case "right":this.body[0].x+=1;break;
+	            case "left":this.body[0].x-=1;break;
+	            case "top":this.body[0].y-=1;break;
+	            case "bottom":this.body[0].y+=1;break;
+	        }
+	        //判断小蛇的头部坐标是否与食物一样
+	        var headX=this.body[0].x*this.width;
+	        var headY=this.body[0].y*this.height;
+	        if(headX==food.x&&headY==food.y){
+	            //第一步——食物消失，重新出现一个新的食物
+	            food.init(map);
+	            //第二步——小蛇的尾巴加长——即复制了一份尾巴加到小蛇上
+	            var snakeLast=this.body[this.body.length-1];
+	            this.body.push({
+	                x:snakeLast.x,
+	                y:snakeLast.y,
+	                color:snakeLast.color,
+	            })
+	        }
+      	}
+  
+      	
  
-        };
-        function remove(){
-            //获取数组
+    };
+    function remove(){
+        //获取数组
         var i=elements.length-1;
         for(;i>=0;i--){
             var ele=elements[i];
             ele.parentNode.removeChild(ele);
             elements.splice(i,1);
         }
-    }
+	}
     window.Snake=Snake;
 })();
 //自调用函数——游戏对象的构造函数
@@ -137,19 +157,23 @@ var map=document.querySelector(".map");
     //游戏初始化
     Game.prototype.init=function (){
         //食物初始化
-      this.food.init(this.map);
-      //小蛇初始化
-      this.snake.init(this.map);
-      //调用小蛇移动的方法
-          this.gameRun(this.food,this.map);
-          this.bindKey();
+        this.food.init(this.map);
+        //小蛇初始化
+        this.snake.init(this.map);
+        //调用小蛇移动的方法
+        this.gameRun(this.food,this.map);
+        this.bindKey();
  
-        };
-        //添加原型方法——设置小蛇可以跑起来
+    };
+    //添加原型方法——设置小蛇可以跑起来
     Game.prototype.gameRun=function (food,map){
         var timeId=setInterval(function (){
             //小蛇移动
-            this.snake.move(food,map);
+            var flag = this.snake.move(food,map);
+            if(flag == false){//蛇吃到了自己
+            	clearInterval(timeId);
+                alert("game over");
+            }
             //小蛇初始化
             this.snake.init(map);
             //最大横纵坐标
@@ -165,14 +189,30 @@ var map=document.querySelector(".map");
             if(headY<0||headY>=maxY){
                 clearInterval(timeId);
                 alert("game over");
-                }
+            }
  
-            }.bind(that),150)
-        };
+        }.bind(that),100)
+    };
     //添加原型方法——注册按键点击事件
     if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 	    Game.prototype.bindKey=function (){
-	        document.getElementById("up").addEventListener("click", function() {
+	    	var This = this;
+	    	$("body").on("click","#up",function(){
+	    		This.snake.direction="top";
+	    	});
+	    	$("body").on("click","#down",function(){
+	    		This.snake.direction="bottom";
+	    	});
+	    	$("body").on("click","#left",function(){
+	    		This.snake.direction="left";
+	    	});
+	    	$("body").on("click","#right",function(){
+	    		This.snake.direction="right";
+	    	});
+	    	
+	    	
+	    	
+	        /*document.getElementById("up").addEventListener("click", function() {
 				this.snake.direction="top";
 			}.bind(that),false);
 			document.getElementById("left").addEventListener("click", function() {
@@ -183,7 +223,7 @@ var map=document.querySelector(".map");
 			}.bind(that),false);
 			document.getElementById("right").addEventListener("click", function() {
 				this.snake.direction="right";
-			}.bind(that),false);
+			}.bind(that),false);*/
 	    };
 	} else {
 		/*Game.prototype.bindKey=function (){
@@ -203,12 +243,13 @@ var map=document.querySelector(".map");
 	    
 	    Game.prototype.bindKey=function (){
 	        addEventListener("keydown", function (e){
-	           switch(e.keyCode){
-	               case 37:this.snake.direction="left";break;
-	               case 38:this.snake.direction="top";break;
-	               case 39:this.snake.direction="right";break;
-	               case 40:this.snake.direction="bottom";break;
-	           }
+	        	this.snake.lastDirection = this.snake.direction;
+	            switch(e.keyCode){
+	                case 37:this.snake.direction="left";break;
+	                case 38:this.snake.direction="top";break;
+	                case 39:this.snake.direction="right";break;
+	                case 40:this.snake.direction="bottom";break;
+	            }
 	        }.bind(that),false);
 	    };
 	}
@@ -217,3 +258,7 @@ var map=document.querySelector(".map");
 }());
 var game=new Game(map);
 game.init();
+
+/*(function (){
+	$(".top_direction").trigger("");
+});*/

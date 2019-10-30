@@ -2,40 +2,39 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">-->
 		<title>啥时候才能回家啊</title>
 	</head>
 	<link href="ui/css/gohome.css" rel="stylesheet" type="text/css" />
 	
 	<body>
-		<center>
-			<div class="out">
-				<div class="inner"><span>距离17:00:00还剩:</span><span id="four"></span></div>
-				<div class="inner"><span>距离18:00:00还剩:</span><span id="one"></span></div>
-				<div class="inner"><span>距离20:00:00还剩:</span><span id="two"></span></div>
-				<div class="inner"><span>距离21:30:00还剩:</span><span id="three"></span></div>
-			</div>
+		<div class="out">
+			<div class="inner"><span>距离17:00:00还剩:</span><span id="four"></span></div>
+			<div class="inner"><span>距离18:00:00还剩:</span><span id="one"></span></div>
+			<div class="inner"><span>距离20:00:00还剩:</span><span id="two"></span></div>
+			<div class="inner"><span>距离21:30:00还剩:</span><span id="three"></span></div>
+		</div>
+		<div class="snake">
 			<div class="map"></div>
-			<div id="phoneOnly">
-				<div class="direction_content">
-					<div class="direction_div top_direction">
-						<img id="up" class="camera_img_up" src="ui/images/up.png" />
-					</div>
-					<div class="middle_direction">
-						<div class="direction_div left_direction">
-							<img id="left" class="camera_img_left" src="ui/images/left.png" />
-						</div>
-						<div class="direction_div right_direction">
-							<img id="right" class="camera_img_right" src="ui/images/right.png" />
-						</div>
-					</div>
-					
-					<div class="direction_div bottom_direction">
-						<img id="down" class="camera_img_bottom" src="ui/images/down.png" />
-					</div>
-					
+		</div>
+		<div id="phoneOnly">
+			<div class="direction_content">
+				<div class="direction_div top_direction">
+					<img id="up" class="camera_img_up" src="ui/images/up.png" />
 				</div>
+				<div class="direction_div left_direction">
+					<img id="left" class="camera_img_left" src="ui/images/left.png" />
+				</div>
+				<div class="direction_div right_direction">
+					<img id="right" class="camera_img_right" src="ui/images/right.png" />
+				</div>
+				
+				<div class="direction_div bottom_direction">
+					<img id="down" class="camera_img_bottom" src="ui/images/down.png" />
+				</div>
+				
 			</div>
-		</center>
+		</div>
 		
 	</body>
 	
