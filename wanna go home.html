@@ -5,67 +5,43 @@
 		<title>啥时候才能回家啊</title>
 	</head>
 	<style>
-		/*.out{
-			margin: 0 0 20px 30%;
-		}*/
+		.out{
+			text-align: center;
+		}
+		
+		.middle:first-child {
+			margin-top:2%;
+		}
 		
 		span{
 			font-size: 1.2em;
 		}
+		.map {
+			margin-top:5%;
+            width: 600px;
+            height: 400px;
+            background-color: gainsboro;
+            position: relative;
+        }
 	</style>
-	<script src="assets/js/jquery.min.js"></script>
-	<script>
-		$(function (){
-			
-			setInterval(function(){
-				var now = new Date();
-				var nowDay = now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate();
-				var four = new Date(nowDay+" 17:00:00");
-				var one = new Date(nowDay+" 18:00:00");
-				var two = new Date(nowDay+" 20:00:00");
-				var three = new Date(nowDay+" 21:30:00");
-				calculate(now,one,"#one");
-				calculate(now,two,"#two");
-				calculate(now,three,"#three");
-				calculate(now,four,"#four");
-			},1000)
-			
-			
-		})
-
-		function calculate(now,leaveTime,id){
-			var nowSecond = now.getTime();
-			var leaveSecond = leaveTime.getTime();
-			var subtract = (leaveSecond - nowSecond)/1000;
-			//小时
-			var hours = Math.floor((subtract %= 86400) / 3600);
-			if(hours<0){
-				hours = hours + 1;
-			}
-			//分钟
-			var minutes = Math.floor((subtract %= 3600) / 60);
-			//秒
-			var seconds = Math.floor(subtract % 60); 
-			$(id).html("");
-			$(id).append(hours + "小时" + minutes + "分钟" + seconds + "秒");
-			if(hours==0&&minutes<=30&&minutes>=0){
-				$(id).css("color","red");
-			}else if(hours<0){
-				$(id).append("，加班辛苦！");
-			}
-		}
-		
-	</script>
+	
 	
 	<body>
 		<center>
-			<div class="out"><span>距离17:00:00还剩:</span><span id="four"></span></div>
-			<div class="out"><span>距离18:00:00还剩:</span><span id="one"></span></div>
-			<div class="out"><span>距离20:00:00还剩:</span><span id="two"></span></div>
-			<div class="out"><span>距离21:30:00还剩:</span><span id="three"></span></div>
+			<div class="out">
+				<div class="inner"><span>距离17:00:00还剩:</span><span id="four"></span></div>
+				<div class="inner"><span>距离18:00:00还剩:</span><span id="one"></span></div>
+				<div class="inner"><span>距离20:00:00还剩:</span><span id="two"></span></div>
+				<div class="inner"><span>距离21:30:00还剩:</span><span id="three"></span></div>
+			</div>
+			<div class="map"></div>
 		</center>
-		
 		
 	</body>
 	
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="ui/js/countDown.js"></script>
+	<script src="ui/js/snakeGame.js"></script>
+	
+
 </html>
