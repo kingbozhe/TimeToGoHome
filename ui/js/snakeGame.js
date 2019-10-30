@@ -169,17 +169,50 @@ var map=document.querySelector(".map");
  
             }.bind(that),150)
         };
-        //添加原型方法——注册按键点击事件
-    Game.prototype.bindKey=function (){
-        addEventListener("keydown", function (e){
-           switch(e.keyCode){
-               case 37:this.snake.direction="left";break;
-               case 38:this.snake.direction="top";break;
-               case 39:this.snake.direction="right";break;
-               case 40:this.snake.direction="bottom";break;
-           }
-        }.bind(that),false);
-    };
+    //添加原型方法——注册按键点击事件
+    if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+	    Game.prototype.bindKey=function (){
+	        document.getElementById("up").addEventListener("click", function() {
+				this.snake.direction="top";
+			}.bind(that),false);
+			document.getElementById("left").addEventListener("click", function() {
+				this.snake.direction="left";
+			}.bind(that),false);
+			document.getElementById("down").addEventListener("click", function() {
+				this.snake.direction="bottom";
+			}.bind(that),false);
+			document.getElementById("right").addEventListener("click", function() {
+				this.snake.direction="right";
+			}.bind(that),false);
+	    };
+	} else {
+		/*Game.prototype.bindKey=function (){
+	        document.getElementById("up").addEventListener("click", function() {
+				this.snake.direction="top";
+			}.bind(that),false);
+			document.getElementById("left").addEventListener("click", function() {
+				this.snake.direction="left";
+			}.bind(that),false);
+			document.getElementById("down").addEventListener("click", function() {
+				this.snake.direction="bottom";
+			}.bind(that),false);
+			document.getElementById("right").addEventListener("click", function() {
+				this.snake.direction="right";
+			}.bind(that),false);
+	    };*/
+	    
+	    Game.prototype.bindKey=function (){
+	        addEventListener("keydown", function (e){
+	           switch(e.keyCode){
+	               case 37:this.snake.direction="left";break;
+	               case 38:this.snake.direction="top";break;
+	               case 39:this.snake.direction="right";break;
+	               case 40:this.snake.direction="bottom";break;
+	           }
+	        }.bind(that),false);
+	    };
+	}
+    
     window.Game=Game;
 }());
 var game=new Game(map);

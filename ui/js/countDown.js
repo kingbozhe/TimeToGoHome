@@ -1,4 +1,9 @@
 $(function (){
+	if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+	    $("#phoneOnly").css("display","");
+	} else {
+		$("#phoneOnly").css("display","none");
+	}
 	
 	setInterval(function(){
 		init();

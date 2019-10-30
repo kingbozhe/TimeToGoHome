@@ -1,0 +1,63 @@
+.out{
+	text-align: center;
+}
+
+.middle:first-child {
+	margin-top:2%;
+}
+
+span{
+	font-size: 1.2em;
+}
+.map {
+	margin-top:5%;
+    width: 600px;
+    height: 400px;
+    background-color: gainsboro;
+    position: relative;
+}
+
+
+.direction_content{
+	 width: 100%;
+	 height: 70%;
+	 position: relative;
+}
+.direction_div{
+	position:relative;
+	width: 30px;
+	height: 30px;
+}
+.direction_div img{
+	width: 100%;
+	height:  100%;
+}
+/*left*/
+.left_direction {
+	/*top: 5%;
+	left: 0%; */
+	float:left;
+}
+/*bottom*/
+.bottom_direction{
+	top:5%;
+	left: 0%;
+}
+/*right*/
+.right_direction{
+	/*top: 5%;
+	left: 5%;*/
+	float:left;
+	margin-left: 38%;
+}
+/*top*/
+.top_direction{
+	top: 2%;
+	left: 0%; 
+}
+
+.middle_direction{
+	text-align: center;
+	width: 100px;
+	height: 30px;
+}

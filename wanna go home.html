@@ -4,27 +4,7 @@
 		<meta charset="utf-8">
 		<title>啥时候才能回家啊</title>
 	</head>
-	<style>
-		.out{
-			text-align: center;
-		}
-		
-		.middle:first-child {
-			margin-top:2%;
-		}
-		
-		span{
-			font-size: 1.2em;
-		}
-		.map {
-			margin-top:5%;
-            width: 600px;
-            height: 400px;
-            background-color: gainsboro;
-            position: relative;
-        }
-	</style>
-	
+	<link href="ui/css/gohome.css" rel="stylesheet" type="text/css" />
 	
 	<body>
 		<center>
@@ -35,6 +15,26 @@
 				<div class="inner"><span>距离21:30:00还剩:</span><span id="three"></span></div>
 			</div>
 			<div class="map"></div>
+			<div id="phoneOnly">
+				<div class="direction_content">
+					<div class="direction_div top_direction">
+						<img id="up" class="camera_img_up" src="ui/images/up.png" />
+					</div>
+					<div class="middle_direction">
+						<div class="direction_div left_direction">
+							<img id="left" class="camera_img_left" src="ui/images/left.png" />
+						</div>
+						<div class="direction_div right_direction">
+							<img id="right" class="camera_img_right" src="ui/images/right.png" />
+						</div>
+					</div>
+					
+					<div class="direction_div bottom_direction">
+						<img id="down" class="camera_img_bottom" src="ui/images/down.png" />
+					</div>
+					
+				</div>
+			</div>
 		</center>
 		
 	</body>
