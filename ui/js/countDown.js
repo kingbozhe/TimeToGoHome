@@ -10,7 +10,7 @@ $(function (){
 function init(){
 	var now = new Date();
 	var nowDay = now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate();
-	var four = new Date(nowDay+" 17:43:00");
+	var four = new Date(nowDay+" 17:00:00");
 	var one = new Date(nowDay+" 18:00:00");
 	var two = new Date(nowDay+" 20:00:00");
 	var three = new Date(nowDay+" 21:30:00");
